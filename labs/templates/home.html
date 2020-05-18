@@ -1,0 +1,33 @@
+
+{% extends 'index.html' %}
+{% block content %}
+
+<h1>Добавить клиента</h1>
+
+
+<form action="." method="post">
+    <input type="hidden" name="csrfmiddlewaretoken"
+           value="KUCnBgpcf14ax23yQfQxQQGO7iq01J75Dlx3dtloPGjfVdlAdIXTRmvCUrR9E0T6">
+
+    <p><label for="id_first_name">Имя:</label>
+        <input type="text" name="first_name" maxlength="255" required=""
+                                                      id="id_first_name"></p>
+    <p><label for="id_second_name">Фамилия:</label>
+        <input type="text" name="second_name" maxlength="255" required=""
+                                                           id="id_second_name"></p>
+    <p><label for="id_middle_name">Отчество:</label>
+        <input type="text" name="middle_name" maxlength="255" required=""
+                                                            id="id_middle_name"></p>
+    <p><label for="id_email">Телефон:</label>
+        <input type="text" name="email" maxlength="16" id="id_email"></p>
+    <p><label for="id_status">Статус клиента:</label>
+        <select name="status" id="id_status">
+        <option value="base" selected="">Обычный</option>
+        <option value="vip">VIP</option>
+    </select></p>
+    <p>
+        <label for="id_date_birth">Дата рождения:</label>
+        <input type="text" name="date_birth" required="" id="id_date_birth"></p>
+    <button>Сохранить</button>
+</form>
+{% endblock content %}

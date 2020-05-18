@@ -1,0 +1,32 @@
+
+{% extends 'index.html' %}
+{% block content %}
+
+<h1>Изменить клиента</h1>
+
+
+<form action="{% url 'home:update'  id %}" method="post">
+   {% csrf_token %}
+
+    <p><label for="id_first_name">Имя:</label>
+        <input type="text" name="first_name" maxlength="255" required="" value="{{client.1}}"
+                                                      id="id_first_name"></p>
+    <p><label for="id_second_name">Фамилия:</label>
+        <input value="{{client.2}}" type="text" name="second_name" maxlength="255" required=""
+                                                           id="id_second_name"></p>
+    <p><label for="id_middle_name">Отчество:</label>
+        <input value="{{client.3}}" type="text" name="middle_name" maxlength="255" required=""
+                                                            id="id_middle_name"></p>
+    <p><label for="id_email">Телефон:</label>
+        <input value="{{client.4}}" type="text" name="email" maxlength="16" id="id_email"></p>
+    <p><label for="id_status">Статус клиента:</label>
+        <select name="status" id="id_status">
+        <option value="base" {% if client.5 == 'base' %} selected {% endif %}>Обычный</option>
+        <option value="vip" {% if client.5 == 'vip' %} selected {% endif %} >VIP</option>
+    </select></p>
+    <p>
+        <label for="id_date_birth">Дата рождения:</label>
+        <input value="{{client.6|date:'Y-m-d'}}" type="text" name="date_birth" required="" id="id_date_birth"></p>
+    <button>Сохранить</button>
+</form>
+{% endblock content %}

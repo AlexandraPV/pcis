@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    <h1>Обновить резерв </h1>
+
+    <form action="" method="post">{% csrf_token %}
+        <div>
+            <label for="">Заказ:</label>
+            <span>{{ booking.order.room }} № {{ booking.order.id }}</span>
+            <p>
+                Клиент - {{ booking.order.client }}
+                <input type="hidden" value="{{ booking.order.id }}" name="order_id">
+            </p>
+        </div>
+        <div>
+            <label for="">Паспортные данные</label>
+            <input type="text" name="passport" value="{{ booking.passport }}">
+        </div>
+        <div>
+            <label for="">Депозит</label>
+            <input type="text" name="money" value="{{ booking.money }}">
+        </div>
+        <button>Обновить</button>
+    </form>
+{% endblock content %}

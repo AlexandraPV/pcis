@@ -1,0 +1,62 @@
+
+{% extends 'index.html' %}
+{% block content %}
+
+<h1>Список клиентов</h1>
+<h1>Добавить клиента</h1>
+
+
+<form action="{% url 'home:main' %}" method="post">
+    {% csrf_token %}
+
+    <p><label for="id_first_name">Имя:</label>
+        <input type="text" name="first_name" maxlength="255" required=""
+                                                      id="id_first_name"></p>
+    <p><label for="id_second_name">Фамилия:</label>
+        <input type="text" name="second_name" maxlength="255" required=""
+                                                           id="id_second_name"></p>
+    <p><label for="id_middle_name">Отчество:</label>
+        <input type="text" name="middle_name" maxlength="255" required=""
+                                                            id="id_middle_name"></p>
+    <p><label for="id_email">Телефон:</label>
+        <input type="text" name="email" maxlength="16" id="id_email"></p>
+    <p><label for="id_status">Статус клиента:</label>
+        <select name="status" id="id_status">
+        <option value="base" selected="">Обычный</option>
+        <option value="vip">VIP</option>
+    </select></p>
+    <p>
+        <label for="id_date_birth">Дата рождения:</label>
+        <input type="text" name="date_birth" required="" id="id_date_birth"></p>
+    <button>Сохранить</button>
+</form>
+<table cellpadding="10" cellspacing="0" border="2">
+    <tr>
+        <td>ID</td>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Отечество</td>
+        <td>Номер телефона</td>
+        <td>Статус</td>
+        <td>Дата рождения</td>
+        <td>
+            Действия
+        </td>
+    </tr>
+    {% for client in clients %}
+    <tr>
+        <td>{{ client.0 }}</td>
+        <td>{{ client.1 }}</td>
+        <td>{{ client.2 }}</td>
+        <td>{{ client.3 }}</td>
+        <td>{{ client.4 }}</td>
+        <td>{{ client.5 }}</td>
+        <td>{{ client.6|date:'Y-m-d' }}</td>
+        <td>
+            <a href="{% url 'home:update' pk=client.0 %}">Изменить</a>
+            <a href="{% url 'home:delete' pk=client.0 %}">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

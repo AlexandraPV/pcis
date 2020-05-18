@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    <h1>все резервы</h1>
+
+    <table border="1" cellpadding="5" cellspacing="0" class="table table-bordered">
+        <tr>
+            <td>ID</td>
+            <td>клиент</td>
+            <td>Комната</td>
+            <td>Дата заезда</td>
+            <td>Дата выезда</td>
+            <td>Доп услуги</td>
+            <td>Потвержденная бронь</td>
+            <td>Действия</td>
+        </tr>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.client }}</td>
+                <td>{{ order.room }}</td>
+                <td>{{ order.date_from }}</td>
+                <td>{{ order.date_to }}</td>
+                <td>
+                    {% for service in order.get_services %}
+                        <p>{{ service }}</p>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% if order.get_booking %}
+                        <span style="color: green;">Потвержден</span>
+                    {% else %}
+                        <span style="color: red;">Не потвереждена</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'orm:delete_order' order.id %}">удалить</a>
+                    <br>
+                    {% if order.get_booking %}
+                        <a href="{% url 'orm:update_approve' pk=order.get_booking.id %}">Обновить бронь</a>
+                    {% else %}
+                        <a href="{% url 'orm:approve' order.id %}">потвердить бронь</a>
+
+                    {% endif %}
+                    <br>
+                    <a href="{% url 'orm:update_order' order.id %}">редактировать бронь</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock content %}
