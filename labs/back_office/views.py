@@ -50,47 +50,42 @@ def client_list(request):
     clients = Client.objects.all()
     ctx['clients'] = clients
     #
+    cursor = connection.cursor()
+    cursor.execute("""
+    SELECT `back_office_client`.`id`, `back_office_client`.`first_name`,
+     `back_office_client`.`second_name`,
+      `back_office_client`.`middle_name`,
+      `back_office_client`.`email`,
+     `back_office_client`.`status`,
+      `back_office_client`.`date_birth`
+      FROM `back_office_client`
 
-
-    # SQL QUERY
-    # cursor = connection.cursor()
-    # cursor.execute("""
-    # SELECT `back_office_client`.`id`, `back_office_client`.`first_name`,
-    #  `back_office_client`.`second_name`,
-    #   `back_office_client`.`middle_name`,
-    #   `back_office_client`.`email`,
-    #  `back_office_client`.`status`,
-    #   `back_office_client`.`date_birth`
-    #   FROM `back_office_client`
-    #
-    # """)
-    # ctx['clients'] = cursor.fetchall()
-    # cursor.close()
+    """)
+    ctx['clients'] = cursor.fetchall()
+    cursor.close()
     return render(request, 'list.html', ctx)
 
 
 def update(request, pk):
     ctx = {}
 
-    # ORM
-    client  = Client.objects.get(id=pk)
-    ctx['client'] = client
-
-    # SQL QUERY
-    # cursor = connection.cursor()
-    # cursor.execute("""
-    #    SELECT `back_office_client`.`id`, `back_office_client`.`first_name`,
-    #     `back_office_client`.`second_name`,
-    #      `back_office_client`.`middle_name`,
-    #      `back_office_client`.`email`,
-    #     `back_office_client`.`status`,
-    #      `back_office_client`.`date_birth`
-    #      FROM `back_office_client`
-    #     WHERE id = {}
-    #    """.format(pk))
-    # ctx['client'] = cursor.fetchone()
-    # ctx['id'] = pk
-    # cursor.close()
+    #ORM
+    # client  = Client.objects.get(id=pk)
+    # ctx['client'] = client
+    cursor = connection.cursor()
+    cursor.execute("""
+       SELECT `back_office_client`.`id`, `back_office_client`.`first_name`,
+        `back_office_client`.`second_name`,
+         `back_office_client`.`middle_name`,
+         `back_office_client`.`email`,
+        `back_office_client`.`status`,
+         `back_office_client`.`date_birth`
+         FROM `back_office_client`
+        WHERE id = {}
+       """.format(pk))
+    ctx['client'] = cursor.fetchone()
+    ctx['id'] = pk
+    cursor.close()
 
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
@@ -113,30 +108,29 @@ def update(request, pk):
             }
         )
 
-        # SQL QUERY
-        # cursor = connection.cursor()
-        # cursor.execute(
-        #     """
-        #     UPDATE back_office_client
-        #     SET
-        #         first_name = '{first_name}',
-        #         second_name = '{second_name}',
-        #         middle_name = '{middle_name}',
-        #         email = '{email}',
-        #         status = '{status}',
-        #         date_birth = '{date_birth}'
-        #     WHERE
-        #         id = {id_};
-        # """.format(
-        #         first_name=first_name,
-        #         second_name=second_name,
-        #         middle_name=middle_name,
-        #         email=email,
-        #         status=status,
-        #         date_birth=date_birth,
-        #         id_=pk
-        #     ))
-        # cursor.close()
+        cursor = connection.cursor()
+        cursor.execute(
+            """
+            UPDATE back_office_client 
+            SET 
+                first_name = '{first_name}',
+                second_name = '{second_name}',
+                middle_name = '{middle_name}',
+                email = '{email}',
+                status = '{status}',
+                date_birth = '{date_birth}'
+            WHERE
+                id = {id_};
+        """.format(
+                first_name=first_name,
+                second_name=second_name,
+                middle_name=middle_name,
+                email=email,
+                status=status,
+                date_birth=date_birth,
+                id_=pk
+            ))
+        cursor.close()
         return redirect('home:client_list')
     return render(request, 'update.html', ctx)
 

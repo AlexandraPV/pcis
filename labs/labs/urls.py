@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('back_office.urls' , namespace='home')),
     path('orm/', include('orm.urls' , namespace='orm')),
+    path('dao/', include('dao.urls' , namespace='odaorm')),
 ]

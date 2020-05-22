@@ -38,6 +38,8 @@
                     <br>
                     {% if order.get_booking %}
                         <a href="{% url 'orm:update_approve' pk=order.get_booking.id %}">Обновить бронь</a>
+                                            <a href="{% url 'dao:get_one' order.get_booking.id %}">Просмотреть бронь</a>
+
                     {% else %}
                         <a href="{% url 'orm:approve' order.id %}">потвердить бронь</a>
 

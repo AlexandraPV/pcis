@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+<style>
+    legend {
+        background-color: #000;
+        color: #fff;
+        padding: 3px 6px;
+    }
+
+    .output {
+        font: 1rem 'Fira Sans', sans-serif;
+    }
+
+    input {
+        margin: .4rem;
+    }
+</style>
+
+{% block content %}
+
+    <h1>Информация по букингу {{ booking.id }}</h1>
+    <p>Client - {{ booking.order.client }}</p>
+    <h2>Номер</h2>
+    <hr>
+    <div style="margin-left: 100px">
+        <p>name - {{ room.name }}</p>
+        <p>count_seats - {{ room.count_seats }}</p>
+        <p>price - <b>{{ room.price }}</b></p>
+        <p>description - {{ room.description }}</p>
+        <p>view_from_window - {{ room.view_from_window }}</p>
+
+        </p>
+    </div>
+    {#    <p>room - {{ room.name }}</p>#}
+    <p>passport - {{ booking.passport }}</p>
+    <p>money - {{ booking.money }} $</p>
+    <p>date_from - {{ booking.order.date_from }} </p>
+    <p>date_to - {{ booking.order.date_to }} </p>
+    <p>optional_services -
+    <table cellpadding="5" border="1">
+        <tr>
+            <td>#</td>
+            <td>name</td>
+            <td>text</td>
+            <td>price , $</td>
+        </tr>
+        {% for service in booking.order.optional_services.all %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ service.name }}</td>
+                <td>{{ service.text }}</td>
+                <td>{{ service.price }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    </p>
+
+    <h1>Общая сумма : {{ total_price }} $</h1>
+    <h2> К оплате {{ payment }}$</h2>
+    <a href="{% url 'dao:delete_booking' booking.id %}" class="btn btn-danger">удалить</a>
+{% endblock content %}

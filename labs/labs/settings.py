@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'back_office',
-    'orm'
+    'orm',
+    'dao',
 ]
 
 MIDDLEWARE = [
